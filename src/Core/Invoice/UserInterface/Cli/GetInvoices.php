@@ -5,6 +5,7 @@ namespace App\Core\Invoice\UserInterface\Cli;
 use App\Common\Bus\QueryBusInterface;
 use App\Core\Invoice\Application\DTO\InvoiceDTO;
 use App\Core\Invoice\Application\Query\GetInvoicesByStatusAndAmountGreater\GetInvoicesByStatusAndAmountGreaterQuery;
+use App\Core\Invoice\Domain\Status\InvoiceStatus;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -24,7 +25,17 @@ class GetInvoices extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $status = $input->getArgument('status');
+        $invoiceStatus = InvoiceStatus::tryFrom($status);
+
+        if ($invoiceStatus === null) {
+            $output->writeln('Status jest niepoprawny');
+
+            return Command::INVALID;
+        }
+
         $invoices = $this->bus->dispatch(new GetInvoicesByStatusAndAmountGreaterQuery(
+            $invoiceStatus,
             $input->getArgument('amount')
         ));
 
