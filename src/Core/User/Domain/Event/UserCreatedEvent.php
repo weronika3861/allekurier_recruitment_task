@@ -6,7 +6,6 @@ class UserCreatedEvent extends AbstractUserEvent
 {
     public function getUserEmail(): string
     {
-        // $this->user->getEmail();
-        return '';
+        return $this->user->getEmail();
     }
 }
