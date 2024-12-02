@@ -19,11 +19,11 @@ final class Version20241201162855AddColumnActiveToUsersTable extends AbstractMig
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE users ADD active TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE users ADD `active` TINYINT(1) NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE users DROP active');
+        $this->addSql('ALTER TABLE users DROP `active`');
     }
 }

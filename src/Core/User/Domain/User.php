@@ -34,7 +34,7 @@ class User
     {
         $this->id = null;
         $this->email = $email;
-        $this->active = true;
+        $this->active = false;
     }
 
     public function getEmail(): string
